@@ -28,7 +28,7 @@ var characterData = [{
 
     {
         name: $('.char2'),
-        health: 20,
+        health: 200,
         count: 0,
 
     },
@@ -52,7 +52,7 @@ var characterData = [{
 
 
 var moveable = true;
-
+var attackButton = $('#attack-btn');
 
 //Disable button
 var disableBtn = true;
@@ -78,11 +78,13 @@ $(document).ready(function () {
             enemyGenerator(characterData);
 
         } else if (moveable === false && characterData[0].count === 0) {
+
+            opponent.health = characterData[0].health;
             //Enables attack button after defender is selected
             fightPrep($('.char1'));
 
             $('.health-1').addClass('opponent-health');
-            
+
 
 
 
@@ -130,7 +132,7 @@ $(document).ready(function () {
 
             fightPrep($('.char3'));
             $('.health-3').addClass('opponent-health');
-
+            opponent.health = characterData[2].health;
 
         }
 
@@ -148,7 +150,7 @@ $(document).ready(function () {
 
             enemyGenerator(characterData);
         } else if (moveable === false && characterData[3].count === 0) {
-
+            opponent.health = characterData[3].health;
             fightPrep($('.char4'));
             $('.health-4').addClass('opponent-health');
 
@@ -165,6 +167,7 @@ $(document).ready(function () {
 
 //**** Player Attack Functions ****/
 function attack() {
+
     var playerAttack = player.getAttack();
 
     opponent.health -= playerAttack;
@@ -243,11 +246,10 @@ function fightPrep(char) {
     disableBtn = false;
     $(char).removeClass("col-md-3");
     $(".hide").removeClass("hide");
-    $('.versus').html('<h2>VS</h2>');
+  
     $(char).appendTo('.defenderBox').addClass("defender");
     $('#prompter').html('<h3 id="prompter">FIGHT!</h3>');
 
-    $('.hero').append('<button class="btn btn-primary" type="button" id="attack-btn" onclick="attack()">Attack</button>').css("box-sizing", "border-box");
 
 
 }
