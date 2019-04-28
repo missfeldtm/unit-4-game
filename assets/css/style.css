@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700');
 
 body{
-    margin-top:1rem;
+    margin-top:2rem;
     background-image: url("../images/background.png");
     background-position: center;
     background-size: cover;
@@ -26,8 +26,13 @@ body{
 
 .versus{
 
-    padding-top:15%;
+    padding-top:5%;
 
+}
+
+.vs{
+
+    font-size:8rem;
 }
 
 .hide{
@@ -35,5 +40,5 @@ body{
 }
 
 button{
-    size: 2rem;
+    padding:2rem;
 }

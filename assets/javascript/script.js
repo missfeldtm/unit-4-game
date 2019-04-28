@@ -25,7 +25,6 @@ var characterData = [{
         count: 0
 
     },
-
     {
         name: $('.char2'),
         health: 200,
@@ -48,19 +47,16 @@ var characterData = [{
     }
 ];
 
-
-
-
+/***** random variables used in game *****/
 var moveable = true;
 var attackButton = $('#attack-btn');
-
 //Disable button
 var disableBtn = true;
-
 var prompter = $('#prompter');
 
 
 
+/*****Choose Your Player *******/
 
 $(document).ready(function () {
 
@@ -85,9 +81,6 @@ $(document).ready(function () {
 
             $('.health-1').addClass('opponent-health');
 
-
-
-
         }
 
     });
@@ -99,8 +92,6 @@ $(document).ready(function () {
             characterData[1].count++;
             moveable = false;
             player.health = characterData[1].health;
-
-
 
             enemyGenerator(characterData);
 
@@ -164,8 +155,7 @@ $(document).ready(function () {
 
 
 
-
-//**** Player Attack Functions ****/
+//**** Player Attack Function ****/
 function attack() {
 
     var playerAttack = player.getAttack();
@@ -211,29 +201,17 @@ function attack() {
 
 };
 
-function gameOver(health) {
-    return health <= 0;
-    //returns boolean
-
-}
-
-function offTheIsland() {
-
-    $('.defender').remove();
-
-}
 
 
+
+
+/********** General DRY Functions **********/
 function printToScreen() {
 
     $('.opponent-health').html('<p class="card-title opponent-health">' + opponent.health + '</p>');
 
     $('.player-health').html('<p class="card-title opponent-health">' + player.health + '</p>');
 }
-
-
-
-
 function disableClick() {
     $(".char4").off();
     $(".char1").off();
@@ -246,7 +224,7 @@ function fightPrep(char) {
     disableBtn = false;
     $(char).removeClass("col-md-3");
     $(".hide").removeClass("hide");
-  
+
     $(char).appendTo('.defenderBox').addClass("defender");
     $('#prompter').html('<h3 id="prompter">FIGHT!</h3>');
 
@@ -262,8 +240,20 @@ function enemyGenerator(arr) {
     }
     $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
 }
+function offTheIsland() {
 
+    $('.defender').remove();
 
+}
+function gameOver(health) {
+    return health <= 0;
+    //returns boolean
+
+}
+
+function reset(){
+    
+}
 
 
 
