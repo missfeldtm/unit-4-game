@@ -1,180 +1,268 @@
+// user chooses player
+//each player is an object in an array
+
+/**** Player Variables ****/
+var player = {
+    health: 0,
+    power: 20,
+    getAttack: function () {
+        return Math.floor(Math.random() * this.power);
+    }
+
+}
+
+var opponent = {
+    health: 0,
+    power: 20,
+    getAttack: function () {
+        return Math.floor(Math.random() * this.power);
+    }
+}
+
+var characterData = [{
+        name: $('.char1'),
+        health: 150,
+        count: 0
+
+    },
+
+    {
+        name: $('.char2'),
+        health: 20,
+        count: 0,
+
+    },
+
+    {
+        name: $('.char3'),
+        health: 170,
+        count: 0,
+
+    },
+
+    {
+        name: $('.char4'),
+        health: 130,
+        count: 0,
+
+    }
+];
+
+
+
+
+var moveable = true;
+
+
+//Disable button
+var disableBtn = true;
+
+var prompter = $('#prompter');
+
+
+
+
 $(document).ready(function () {
 
+    characterData[0].name.on('click', function () {
+        if (moveable === true) {
 
-    // user chooses player
-    //each player is an object in an array
-
-    /**** Player Variables ****/
-
-    var characters = [{
-            name: "kylo",
-            health: 150,
-            attack: 20,
-            img: "assets/images/kylo.jpeg"
-        },
-
-        {
-            name: 'rey',
-            health: 200,
-            attack: 20,
-            img: "assets/images/rey.jpg"
-        },
-
-        {
-            name: 'han',
-            health: 170,
-            attack: 20,
-            img: "assets/images/hanSolo.jpg"
-        },
-
-        {
-            name: 'luke',
-            health: 130,
-            attack: 20,
-            img: "assets/images/luke.jpg"
-        }
-    ];
-
-
-    var char1Count = true;
-   
-
-    //Counter
-    var kyloCount = 0;
-    var reyCount = 0;
-    var hanCount = 0;
-    var lukeCount = 0;
-
-    //Disable button
-    var disableBtn = true;
-    /*When character 1 is clicked move the
-      other characters to enimes section*/
-
-    $('.char1').on('click', function () {
-        if (char1Count === true) {
             $(this).addClass('hero');
-            kyloCount++;
-            //Changes to false so Main character wont move to enemies area
-            char1Count = false;
 
-            // adds the other characters to enemies section
-            $('.char2').appendTo('.enemiesBox');
-            $('.char3').appendTo('.enemiesBox');
-            $('.char4').appendTo('.enemiesBox');
+            $('.health-1').addClass('player-health');
 
-            $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
+            characterData[0].count++;
+            moveable = false;
+            player.health = characterData[0].health;
 
-        } else if (char1Count === false && kyloCount === 0) {
+            enemyGenerator(characterData);
+
+        } else if (moveable === false && characterData[0].count === 0) {
             //Enables attack button after defender is selected
-            reyCount++;
-            hanCount++;
-            lukeCount++;
-            disableBtn = false;
-            $(".char1").removeClass("col-md-3");
-            $(".hide").removeClass("hide");
-            $('.versus').html('<h2>VS</h2>');
-            $('.char1').appendTo('.defenderBox').addClass("def");
-            $('#prompter').html('<h3 id="prompter">FIGHT!</h3>');
+            fightPrep($('.char1'));
+
+            $('.health-1').addClass('opponent-health');
+            
+
 
 
         }
 
     });
 
-    $('.char2').on('click', function () {
-        if (char1Count === true) {
+    characterData[1].name.on('click', function () {
+        if (moveable === true) {
             $(this).addClass('hero');
-            reyCount++;
-            //Changes to false so Main character wont move to enemies area
-            char1Count = false;
+            $('.health-2').addClass('player-health');
+            characterData[1].count++;
+            moveable = false;
+            player.health = characterData[1].health;
 
-            // adds the other characters to enemies section
-            $('.char1').appendTo('.enemiesBox');
-            $('.char3').appendTo('.enemiesBox');
-            $('.char4').appendTo('.enemiesBox');
 
-            $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
-        } else if (char1Count === false && reyCount === 0) {
-            //Enables attack button after defender is selected
-            reyCount++;
-            hanCount++;
-            lukeCount++;
-            disableBtn = false;
-            $(".char2").removeClass("col-md-3");
-            $(".hide").removeClass("hide");
-            $('.versus').html('<h2>VS</h2>');
-            $('.char2').appendTo('.defenderBox').addClass('def');
 
-        }
+            enemyGenerator(characterData);
 
-    });
-    $('.char3').on('click', function () {
-        if (char1Count === true) {
-            $(this).addClass('hero');
-            reyCount++;
-            //Changes to false so Main character wont move to enemies area
-            char1Count = false;
+        } else if (moveable === false && characterData[1].count === 0) {
 
-            // adds the other characters to enemies section
-            $('.char1').appendTo('.enemiesBox');
-            $('.char2').appendTo('.enemiesBox');
-            $('.char4').appendTo('.enemiesBox');
+            opponent.health = characterData[1].health;
 
-            $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
-        } else if (char1Count === false && hanCount === 0) {
-            //Enables attack button after defender is selected
-            reyCount++;
-            hanCount++;
-            lukeCount++;
-            disableBtn = false;
-            $(".char3").removeClass("col-md-3");
-            $(".hide").removeClass("hide");
-            $('.versus').html('<h2>VS</h2>');
-            $('.char3').appendTo('.defenderBox').addClass('def');
 
-        }
-
-    });
-    $('.char4').on('click', function () {
-        if (char1Count === true) {
-            $(this).addClass('hero');
-            reyCount++;
-            //Changes to false so Main character wont move to enemies area
-            char1Count = false;
-
-            // adds the other characters to enemies section
-            $('.char1').appendTo('.enemiesBox');
-            $('.char2').appendTo('.enemiesBox');
-            $('.char3').appendTo('.enemiesBox');
-
-            $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
-        } else if (char1Count === false && lukeCount === 0) {
-
-            //Enables attack button after defender is selected
-            reyCount++;
-            hanCount++;
-            lukeCount++;
-            disableBtn = false;
-
-            $(".char4").removeClass("col-md-3");
-            $(".hide").removeClass("hide");
-            $('.versus').html('<h2>VS</h2>');
-            $('.char4').appendTo('.defenderBox').addClass('def');
+            fightPrep($('.char2'));
+            $('.health-2').addClass('opponent-health');
 
         }
 
     });
 
+    characterData[2].name.on('click', function () {
+        if (moveable === true) {
+            $(this).addClass('hero');
+            $('.health-3').addClass('player-health');
+            characterData[2].count++;
+            player.health = characterData[2].health;
+            //Changes to false so Main character wont move to enemies area
+            moveable = false;
+
+            // adds the other characters to enemies section
+            enemyGenerator(characterData);
+        } else if (moveable === false && characterData[2].count === 0) {
 
 
+            fightPrep($('.char3'));
+            $('.health-3').addClass('opponent-health');
 
 
+        }
 
+    });
 
+    characterData[3].name.on('click', function () {
+        if (moveable === true) {
+            $(this).addClass('hero');
+            $('.health-4').addClass('player-health');
+            player.health = characterData[3].health;
 
+            characterData[3].count++;
+
+            moveable = false;
+
+            enemyGenerator(characterData);
+        } else if (moveable === false && characterData[3].count === 0) {
+
+            fightPrep($('.char4'));
+            $('.health-4').addClass('opponent-health');
+
+        }
+
+    });
 
 
 });
+
+
+
+
+
+//**** Player Attack Functions ****/
+function attack() {
+    var playerAttack = player.getAttack();
+
+    opponent.health -= playerAttack;
+
+    printToScreen();
+
+    if (gameOver(opponent.health)) {
+
+        $('#prompter').html("Player has won the fight, Please Choose You're next Opponent");
+
+        offTheIsland();
+
+        return;
+    }
+
+    attackButton.disabled = true;
+
+
+    $('#prompter').html("<h3>Your Opponent is going to strike</h3>");
+
+
+    setTimeout(function () {
+        var opponentAttack = opponent.getAttack();
+
+        player.health -= opponentAttack;
+
+        printToScreen();
+
+        $('#prompter').html('Opponent inflicted ' + opponentAttack + ' points of your health!');
+
+        if (gameOver(player.health)) {
+            $('#prompter').html("opponent has won the fight");
+            return;
+        }
+
+        attackButton.disabled = false;
+
+    }, 1500);
+
+
+
+};
+
+function gameOver(health) {
+    return health <= 0;
+    //returns boolean
+
+}
+
+function offTheIsland() {
+
+    $('.defender').remove();
+
+}
+
+
+function printToScreen() {
+
+    $('.opponent-health').html('<p class="card-title opponent-health">' + opponent.health + '</p>');
+
+    $('.player-health').html('<p class="card-title opponent-health">' + player.health + '</p>');
+}
+
+
+
+
+function disableClick() {
+    $(".char4").off();
+    $(".char1").off();
+    $(".char2").off();
+    $(".char3").off();
+
+}
+
+function fightPrep(char) {
+    disableBtn = false;
+    $(char).removeClass("col-md-3");
+    $(".hide").removeClass("hide");
+    $('.versus').html('<h2>VS</h2>');
+    $(char).appendTo('.defenderBox').addClass("defender");
+    $('#prompter').html('<h3 id="prompter">FIGHT!</h3>');
+
+    $('.hero').append('<button class="btn btn-primary" type="button" id="attack-btn" onclick="attack()">Attack</button>').css("box-sizing", "border-box");
+
+
+}
+
+function enemyGenerator(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].count === 0) {
+            arr[i].name.appendTo('.enemiesBox');
+        }
+    }
+    $('#prompter').html('<h3 id="prompter">Pick Your Enemy Below:</h3>');
+}
+
+
+
 
 
 
@@ -189,47 +277,6 @@ $(document).ready(function () {
 // Array of character objects
 
 //generate players to choose from
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //selected character moves to player section
@@ -259,39 +306,3 @@ $(document).ready(function () {
 
 
 //if player beats all enemies...wins
-
-
-
-/*   function selectChar () {
-
-
-       var charDiv = $("<div class='character' data-name=" + char.name + "'>");
-
-       var charName = $("<div class='character-name' >").text(char.name);
-
-       var charImg = $("<img alt='image' class='character-image'>").attr("src", char.img);
-
-       var charHealth = $("<div class='character-health'>").text(char.health);
-
-       charDiv.append(charName).append(charImg).append(charHealth);
-
-       $(area).append(charDiv).append(charDiv);
-
-   };
-
-
-   */
-
-
-
-/*  <div class="col-md-3">
-      <div class="card text-center char-opt" id="kylo-ren" >
-          <h5 class="card-title">Kylo Ren</h5>
-          <img class="card-img-top" src="assets/images/kylo.jpeg" alt="kyloRen">
-          <div class="card-body">
-              <p class="card-title">150</p>
-          </div>
-      </div>
-  </div>
-
-  */

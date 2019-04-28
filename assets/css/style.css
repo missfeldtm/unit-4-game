@@ -28,3 +28,7 @@ body{
 .hide{
     visibility: hidden;
 }
+
+button{
+    position: static;
+}
